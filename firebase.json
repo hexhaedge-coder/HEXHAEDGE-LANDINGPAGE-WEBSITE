@@ -16,6 +16,8 @@
         "node_modules",
         ".git",
         "test",
+        "test-rules",
+        "scripts",
         "*.log",
         ".env.local"
       ],

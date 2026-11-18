@@ -725,6 +725,80 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "trainingSessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "participants",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "start",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "trainingSessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "trainerUid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "start",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "bookings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "service",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "staffUid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "start",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "bookings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "service",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "start",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "memberships",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "service",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "trainerUid",
+          "order": "ASCENDING"
+        }
+      ]
     }
   ],
   "fieldOverrides": [

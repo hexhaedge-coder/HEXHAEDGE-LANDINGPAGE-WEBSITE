@@ -139,7 +139,7 @@ const createInvitation = callable("createInvitation", async ({ uid: actor, data 
     transition(tx, mRef, null, "invited", { actor, service: "capital", reason: why, extra: { uid: user.uid, service: "capital", invitationId: invRef.id, paymentStatus: "none" } });
   });
   // Login details: a link to set a password. Wording to be reviewed by the lawyer (X-5).
-  const link = await U.admin.auth().generatePasswordResetLink(mail, { url: appUrl("/auth.html#login") });
+  const link = await U.admin.auth().generatePasswordResetLink(mail, { url: appUrl("/auth/#login") });
   const sent = await sendEmail(mail, "Your HexhaEdge invitation",
     `Hello ${name},\n\nYou are invited to HexhaEdge Capital, HexhaEdge's own proprietary trading. This is an invitation, not an offer to invest: HexhaEdge does not trade for, manage or hold money for other people, and promises no returns.\n\nSet your password with the link below, then log in with this email.`, link).catch((e) => ({ status: "failed", detail: e.message }));
   await invRef.update({ emailStatus: sent.status });

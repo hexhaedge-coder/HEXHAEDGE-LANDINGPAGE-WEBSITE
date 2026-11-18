@@ -6,7 +6,7 @@ const VERSION = "hx-v1";
 const CORE = [
   "/",
   "/index.html",
-  "/auth.html",
+  "/auth/",
   "/app/",
   "/assets/css/base.css",
   "/assets/css/landing.css",

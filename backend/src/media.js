@@ -37,7 +37,7 @@ const avatarSignature = callable("avatarSignature", async ({ uid }) => {
     overwrite: "true",
     invalidate: "true",
     allowed_formats: "jpg,jpeg,png,webp",
-    transformation: "c_fill,g_face,w_320,h_320,q_auto,f_auto",
+    transformation: "c_fill,g_face,w_320,h_320",
   };
   return { ...params, signature: sign(params, c.secret), api_key: c.key, cloud_name: c.name };
 }, { secrets: [C.secrets.CLOUDINARY_API_SECRET], limit: [10, 3600] });

@@ -1,0 +1,7 @@
+# Short links
+/login   /auth/#login   302
+/signup  /auth/#signup  302
+/join    /auth/#signup  302
+/terms   /legal/terms/  301
+/privacy /legal/privacy/ 301
+/risk    /legal/risk/   301
