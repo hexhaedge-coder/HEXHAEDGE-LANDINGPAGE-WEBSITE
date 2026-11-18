@@ -28,59 +28,41 @@ public/                 The website. Static files, no build step. Cloudflare Pag
   staff/                Reviewer, trainer, MindSpace and admin workspace (laptop)
   legal/                Terms, Privacy, Risk statement (drafts for the lawyer)
   assets/               CSS, JavaScript modules, logo and door emblems
+  assets/js/firebase-config.js   Firebase web config and the API address  ← fill this in
   _headers, _redirects  Cloudflare security headers (CSP) and short links
   sw.js                 Service worker: instant repeat visits, works on bad connections
-backend/                Firebase Cloud Functions (Node 22)
-  src/engine.js         The Chamber rules engine: pure, deterministic, unit-tested
-  src/*.js              Profiles, consent, Chamber, bookings, M-Pesa, training, admin, jobs
-  test/                 Engine unit tests (run with: cd backend && npm test)
-  test-rules/           Firestore security-rules tests (run against the emulator)
-firestore.rules         Strict, deny-by-default database rules
-storage.rules           Private clip and evidence storage rules
-firestore.indexes.json  Query indexes and TTL policies
-firebase.json           Firebase project wiring
 docs/                   Setup, security model and PRD coverage
 ```
+
+**The backend is in a separate repository:**
+[HEXHAEDGE-WEBSITE-BACKEND](https://github.com/hexhaedge-coder/HEXHAEDGE-WEBSITE-BACKEND). It runs on
+Render (the API, M-Pesa webhooks and scheduled jobs) and holds the Chamber rules engine and the Firebase
+security rules.
 
 ## Stack decisions
 
 | Need | Choice | Why |
 | --- | --- | --- |
-| Hosting | **Cloudflare Pages** (already connected to this repo) | Static site, global CDN, free. Output folder `public`, no build command. |
-| Database, login | **Firebase** Firestore + Authentication | As requested. Phone one-time codes for members, SMS second factor for staff. |
-| Server logic and schedules | **Firebase Cloud Functions** (2nd gen) | Rules engine, M-Pesa callbacks, reminders and counting jobs run on time without a person. |
-| Profile images | **Cloudinary** (signed uploads) | As requested. Only profile photos go here. |
+| Website hosting | **Cloudflare Pages** | Static site, global CDN. Output folder `public`, no build command. |
+| API and scheduled jobs | **Render** (Frankfurt), backend repo | Rules engine, M-Pesa callbacks, reminders and counting jobs run without a person. |
+| Database, login | **Firebase** Firestore + Authentication | Phone one-time codes for members, SMS second factor for staff. |
+| Profile images | **Cloudinary** (signed uploads) | Only profile photos go here. |
 | Trading clips and dashboard evidence | **Firebase Storage** (private) | See below. |
 | Payments | Safaricom Daraja: STK Push + C2B | P-9 to P-13 |
-| SMS / WhatsApp / email | Africa's Talking / WhatsApp Cloud API / Resend | Each switches off cleanly until its key is set |
 
 **Why the clips do not go to a video platform.** The SOD/EOD clips are personal financial records under
 the Data Protection Act. They must never have public addresses (PRD N-3), need resumable uploads (C-2) and
 must be deletable on a schedule (N-9). Firebase Storage does all three, behind the same login and rules as
-the database, and costs nothing extra to run alongside it. The free video platforms do not fit: Mux's free
-plan stores only 10 videos (the pilot makes about 200 clips a month); Cloudinary's free plan is 25 credits a
-month shared with images, and putting private clips there adds another processor with signed-delivery setup;
-Cloudflare Stream has no free plan. A 10-second screen recording plays in every modern browser as recorded,
-so no transcoding service is needed (the PRD reaches the same conclusion). At 5 members, storage is about
-1 GB a month before retention deletes old clips.
+the database. Mux's free plan stores only 10 videos (the pilot makes about 200 clips a month); Cloudinary's
+free plan is 25 credits a month shared with images; Cloudflare Stream has no free plan.
 
 ## Quick start
 
-Full steps are in **[docs/SETUP.md](docs/SETUP.md)**. In short:
+1. Set up the backend first (Firebase + Render): see the backend repository's README.
+2. Fill in `public/assets/js/firebase-config.js`: the Firebase web config and `apiBase` (the Render API address).
+3. In Cloudflare Pages: build command empty, output directory `public`.
 
-1. Create the Firebase project on the Blaze plan (it still has a no-cost tier), region `africa-south1`.
-2. Paste the web config into `public/assets/js/firebase-config.js` — demo mode switches off.
-3. `firebase deploy --only firestore,storage` then set the secrets and `firebase deploy --only functions`.
-4. Make yourself admin: `cd backend && node scripts/bootstrap-admin.js you@example.com`, then enrol two-step login.
-5. In Cloudflare Pages: build command empty, output directory `public`.
-
-## Checks
-
-```
-cd backend
-npm test            # 16 rules-engine tests (no install needed)
-npm run test:rules  # security-rules tests (needs Firebase CLI, Java, npm install)
-```
+Details: **[docs/SETUP.md](docs/SETUP.md)**.
 
 ## Before launch
 
