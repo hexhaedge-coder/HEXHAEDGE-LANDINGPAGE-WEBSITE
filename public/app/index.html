@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dashboard · HexhaEdge</title>
+  <meta name="theme-color" content="#f3ede1">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link id="hx-fonts" rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Caveat:wght@600&family=Courier+Prime:wght@400;700&display=swap">
+  <script src="/assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+  <a class="skip" href="#view">Skip to content</a>
+  <div id="demo-banner" class="demo-banner" hidden>
+    <div class="wrap small">Demo with sample data. Switch state:
+      <a href="?demo=new#overview">new member</a> ·
+      <a href="?demo=chamber#overview">trainee in the Chamber</a> ·
+      <a href="?demo=paused#overview">paused, invited to Capital</a>
+    </div>
+  </div>
+  <header class="appbar">
+    <div class="wrap appbar-in">
+      <a class="brand" href="#overview"><img src="/assets/img/mark-96.webp" width="34" height="34" alt=""> <span>HexhaEdge</span></a>
+      <div class="appbar-actions">
+        <button class="theme-switch" type="button" data-theme-toggle></button>
+        <a class="icon-btn bell" href="#notifications" id="bell" aria-label="Notifications"></a>
+        <a href="#settings" id="me" aria-label="Settings"><span class="avatar">·</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main wrap" id="view" tabindex="-1" aria-live="polite">
+    <div class="stack">
+      <div class="skeleton sk-title"></div>
+      <div class="skeleton sk-block"></div>
+      <div class="skeleton sk-block"></div>
+    </div>
+  </main>
+
+  <nav class="dock" aria-label="Main">
+    <a href="#overview" data-nav="overview"></a>
+    <a href="#services" data-nav="services"></a>
+    <a href="#billing" data-nav="billing"></a>
+    <a href="#messages" data-nav="messages"></a>
+    <a href="#settings" data-nav="settings"></a>
+  </nav>
+
+  <script type="module" src="/assets/js/app/main.js"></script>
+</body>
+</html>

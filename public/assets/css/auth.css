@@ -1,0 +1,30 @@
+.auth-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(300px, 1fr) minmax(0, 1.25fr); }
+.auth-side {
+  background: #000; color: #e8dcc4; display: grid; align-content: center; justify-items: center; gap: 1rem;
+  padding: 2rem; text-align: center; position: sticky; top: 0; height: 100vh;
+}
+.auth-logo img { width: min(260px, 60%); height: auto; margin: 0 auto; }
+.auth-motto { font-size: 2.2rem; color: var(--gold); }
+.auth-side-note { max-width: 26rem; color: #cdbb9d; font-size: .98rem; }
+.auth-main { display: grid; align-content: start; justify-items: center; padding: 1.2rem 1.2rem 2.5rem; }
+.auth-top { width: min(100%, 480px); display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+.auth-home { display: inline-flex; gap: .5rem; align-items: center; color: var(--ink); text-decoration: none; font-family: var(--f-head); font-weight: 700; font-size: 1.1rem; }
+.auth-home img { border-radius: 7px; }
+.auth-top .theme-switch { color: var(--ink-soft); border-color: var(--line); }
+.auth-card { width: min(100%, 480px); background: var(--card); border: 1px solid var(--line-soft); border-radius: var(--r-lg); padding: 1.4rem; box-shadow: var(--shadow); }
+.auth-title { font-size: 1.75rem; }
+.auth-foot { width: min(100%, 480px); margin-top: 1rem; text-align: center; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--paper-2); border-radius: 10px; padding: 4px; margin-bottom: 1.2rem; }
+.tabs button { min-height: 42px; border: 0; background: transparent; border-radius: 8px; font-family: var(--f-type); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.tabs button[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+.steps-bar { display: flex; gap: .4rem; list-style: none; padding: 0; margin: 0 0 1rem; }
+.steps-bar li { flex: 1; text-align: center; font-family: var(--f-type); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: .5rem; border-top: 3px solid var(--line-soft); }
+.steps-bar li.on { color: var(--gold-text); border-color: var(--gold); }
+.code-input { font-family: var(--f-type); font-size: 1.6rem; letter-spacing: .5em; text-align: center; }
+.demo-note { margin-bottom: 1rem; font-size: .92rem; }
+.demo-note a { white-space: nowrap; }
+#auth-error { margin-top: .8rem; }
+@media (max-width: 860px) {
+  .auth-shell { grid-template-columns: 1fr; }
+  .auth-side { display: none; }
+}
