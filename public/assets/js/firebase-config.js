@@ -14,8 +14,8 @@ export const firebaseConfig = {
   appId: "",
 };
 
-// Must match REGION in backend/src/config.js
-export const functionsRegion = "africa-south1";
+// The HexhaEdge API on Render (repository HEXHAEDGE-WEBSITE-BACKEND). No trailing slash.
+export const apiBase = "https://hexhaedge-api.onrender.com";
 
 // Optional: reCAPTCHA Enterprise site key for App Check. Leave empty to skip.
 export const appCheckSiteKey = "";

@@ -1,7 +1,6 @@
 # Cloudflare Pages: the site is the static folder "public". No build step.
-# Firebase Cloud Functions live in "backend/" and are deployed with the Firebase CLI,
-# not by Cloudflare. (That folder is deliberately not called "functions", which
-# Cloudflare Pages would try to build as Pages Functions.)
+# The backend (API, M-Pesa webhooks, scheduled jobs) is in the HEXHAEDGE-WEBSITE-BACKEND
+# repository and runs on Render.
 name = "hexhaedge"
 pages_build_output_dir = "public"
 compatibility_date = "2026-11-01"

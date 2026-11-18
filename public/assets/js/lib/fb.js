@@ -1,6 +1,6 @@
 // Firebase, loaded straight from Google's CDN as ES modules (no build step).
 // One version, pinned here.
-import { firebaseConfig, functionsRegion, appCheckSiteKey } from "../firebase-config.js";
+import { firebaseConfig, apiBase, appCheckSiteKey } from "../firebase-config.js";
 
 const V = "12.11.0";
 const CDN = `https://www.gstatic.com/firebasejs/${V}`;
@@ -15,40 +15,55 @@ export function firebase() {
   if (demoMode) return Promise.reject(new Error("demo"));
   if (ready) return ready;
   ready = (async () => {
-    const [appMod, authMod, fsMod, fnMod, stMod] = await Promise.all([
+    const [appMod, authMod, fsMod, stMod] = await Promise.all([
       import(`${CDN}/firebase-app.js`),
       import(`${CDN}/firebase-auth.js`),
       import(`${CDN}/firebase-firestore.js`),
-      import(`${CDN}/firebase-functions.js`),
       import(`${CDN}/firebase-storage.js`),
     ]);
     const app = appMod.initializeApp(firebaseConfig);
+    let appCheck = null;
+    let AC = null;
     if (appCheckSiteKey) {
-      const ac = await import(`${CDN}/firebase-app-check.js`);
-      ac.initializeAppCheck(app, { provider: new ac.ReCaptchaEnterpriseProvider(appCheckSiteKey), isTokenAutoRefreshEnabled: true });
+      AC = await import(`${CDN}/firebase-app-check.js`);
+      appCheck = AC.initializeAppCheck(app, { provider: new AC.ReCaptchaEnterpriseProvider(appCheckSiteKey), isTokenAutoRefreshEnabled: true });
     }
     const auth = authMod.getAuth(app);
     auth.useDeviceLanguage();
     await authMod.setPersistence(auth, authMod.browserLocalPersistence);
     const db = fsMod.getFirestore(app);
-    const functions = fnMod.getFunctions(app, functionsRegion);
     const storage = stMod.getStorage(app);
-    return { app, auth, db, functions, storage, A: authMod, F: fsMod, Fn: fnMod, S: stMod };
+    return { app, auth, db, storage, appCheck, A: authMod, F: fsMod, S: stMod, AC };
   })();
   return ready;
 }
 
-/** Calls a server function and turns its error into plain words. */
+/**
+ * Calls an action on the HexhaEdge API (Render) with the member's Firebase ID
+ * token, and turns any error into plain words.
+ */
 export async function call(name, data = {}) {
   const fb = await firebase();
+  const user = fb.auth.currentUser;
+  if (!user) throw Object.assign(new Error("Please log in again."), { code: "unauthenticated" });
+  const headers = { Authorization: `Bearer ${await user.getIdToken()}`, "Content-Type": "application/json" };
+  if (fb.appCheck) {
+    try { headers["X-Firebase-AppCheck"] = (await fb.AC.getToken(fb.appCheck)).token; } catch (e) { /* the server decides */ }
+  }
+  let res;
   try {
-    const res = await fb.Fn.httpsCallable(fb.functions, name)(data);
-    return res.data;
+    res = await fetch(`${apiBase}/api/${encodeURIComponent(name)}`, { method: "POST", headers, body: JSON.stringify({ data }), credentials: "omit", cache: "no-store" });
   } catch (e) {
-    const err = new Error(friendly(e));
-    err.code = e.code;
+    throw Object.assign(new Error("No connection to HexhaEdge. Check your internet and try again."), { code: "unavailable" });
+  }
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || json.error) {
+    const e = json.error || {};
+    const err = new Error(friendly({ code: e.status || `http-${res.status}`, message: e.message || "" }));
+    err.code = e.status || `http-${res.status}`;
     throw err;
   }
+  return json.result;
 }
 
 export function friendly(e) {

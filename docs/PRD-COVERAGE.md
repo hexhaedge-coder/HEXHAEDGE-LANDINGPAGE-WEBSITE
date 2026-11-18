@@ -1,6 +1,6 @@
 # PRD coverage
 
-How each requirement in the HexhaEdge Platform PRD (18 Nov 2026) is built. "Proposed" rows from the PRD are
+How each requirement in the HexhaEdge Platform PRD (18 Nov 2026) is built. Server files named here (`engine.js`, `chamber.js`, …) are in the [HEXHAEDGE-WEBSITE-BACKEND](https://github.com/hexhaedge-coder/HEXHAEDGE-WEBSITE-BACKEND) repository under `src/`. "Proposed" rows from the PRD are
 built as switchable settings so Volin can confirm or change them without code changes.
 
 ## Platform-wide
