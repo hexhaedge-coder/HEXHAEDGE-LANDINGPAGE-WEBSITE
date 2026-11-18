@@ -11,3 +11,4 @@
 .legal .lead { font-size: 1.2rem; font-weight: 500; margin: 1rem 0; }
 .draft { background: var(--warn-bg); border: 1px dashed var(--warn); color: var(--ink); padding: .7rem .9rem; border-radius: var(--r-sm); margin-bottom: 1.5rem; font-size: .95rem; }
 .legal-foot { padding-bottom: 2.5rem; border-top: 1px solid var(--line-soft); padding-top: 1rem; }
+.nf-mark { margin: 0 auto 1rem; border-radius: 12px; }

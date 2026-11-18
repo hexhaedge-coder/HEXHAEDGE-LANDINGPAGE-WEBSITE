@@ -1,6 +1,10 @@
-# Cloudflare Pages: the site is the static folder "public". No build step.
-# The backend (API, M-Pesa webhooks, scheduled jobs) is in the HEXHAEDGE-WEBSITE-BACKEND
-# repository and runs on Render.
-name = "hexhaedge"
-pages_build_output_dir = "public"
+# Cloudflare Workers (static assets): serves the website in "public". No build step.
+# The name must match the Worker in the Cloudflare dashboard.
+# The backend (API, M-Pesa webhooks, scheduled jobs) is in HEXHAEDGE-WEBSITE-BACKEND on Render.
+name = "hexhaedge-website"
 compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./public"
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"

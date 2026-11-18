@@ -10,15 +10,19 @@ The platform is two repositories:
 Firebase (Firestore, Authentication, Storage) is shared by both. Set up the backend first: its README walks
 through Firebase and Render. Then come back here.
 
-## 1. Cloudflare Pages
+## 1. Cloudflare
 
-Workers & Pages → your project → Settings → Build:
+The project in Cloudflare is a **Worker** called `hexhaedge-website`, connected to this repository. It serves
+the static files in `public/` (configured in `wrangler.toml`). In Workers & Pages → hexhaedge-website →
+Settings → Build:
 
 - **Build command:** leave empty
-- **Build output directory:** `public`
+- **Deploy command:** `npx wrangler deploy`
 - **Root directory:** `/`
+- **Production branch:** `main`
 
-Every branch push gets a preview URL; `main` is production. Security headers come from `public/_headers`.
+Security headers and redirects come from `public/_headers` and `public/_redirects`.
+The site is served at `hexhaedge-website.hexhaedge.workers.dev` until you add a custom domain.
 
 ## 2. Connect the website to Firebase and the API
 
