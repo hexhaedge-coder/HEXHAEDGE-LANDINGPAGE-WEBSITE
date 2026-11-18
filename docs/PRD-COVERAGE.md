@@ -61,7 +61,7 @@ official branch logos (same file names) and everything updates. The Reality chec
 
 ## Non-functional
 
-N-1 mobile first, installable (manifest + service worker); staff screens for laptop · N-2 fast first paint
+N-1 mobile first (a website, deliberately not an installable app; the service worker only caches for speed); staff screens for laptop · N-2 fast first paint
 (no build, non-blocking fonts, 19 KB logo, cached repeat visits), resumable uploads with progress, still
 animation for slow devices · N-3 to N-5 see `SECURITY.md` · N-7 backups: export command in SETUP · N-8 outage
 rule · N-9 retention job · N-10 WCAG: keyboard, visible focus, contrast-checked colours, reduced motion,

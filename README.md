@@ -24,7 +24,7 @@ Until Firebase is connected, the site runs in **demo mode** with sample data:
 public/                 The website. Static files, no build step. Cloudflare Pages serves this folder.
   index.html            Landing page (black hero band, 14-second logo animation, four doors)
   auth/                 Log in and create profile (phone + one-time code; email + password + SMS for staff)
-  app/                  Member dashboard (mobile first, floating dock, installable as a web app)
+  app/                  Member dashboard (mobile first, floating dock)
   staff/                Reviewer, trainer, MindSpace and admin workspace (laptop)
   legal/                Terms, Privacy, Risk statement (drafts for the lawyer)
   assets/               CSS, JavaScript modules, logo and door emblems
