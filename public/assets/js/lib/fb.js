@@ -67,18 +67,27 @@ export async function call(name, data = {}) {
 }
 
 export function friendly(e) {
-  const code = (e && e.code) || "";
-  const msg = (e && e.message) || "";
+  const code = String((e && e.code) || "");
+  const msg = String((e && e.message) || "");
+  const has = (c) => code.includes(c) || msg.includes(c);
+  if (has("operation-not-allowed")) return "Phone or email sign-in is not switched on in Firebase yet. (auth/operation-not-allowed)";
+  if (has("unauthorized-domain")) return "This website address is not on Firebase's list of authorized domains yet. (auth/unauthorized-domain)";
+  if (has("invalid-app-credential") || has("app-not-authorized")) return "Firebase did not accept this website for SMS codes. Check Authorized domains in Firebase. (auth/invalid-app-credential)";
+  if (has("billing-not-enabled")) return "SMS codes need the Firebase project on the Blaze plan. (auth/billing-not-enabled)";
+  if (has("quota-exceeded")) return "The daily limit for SMS codes was reached. Try again later. (auth/quota-exceeded)";
+  if (has("admin-restricted-operation") || has("region")) return "SMS to this country is not allowed in Firebase's SMS region policy yet.";
   if (code.endsWith("unauthenticated")) return "Please log in again.";
-  if (code.endsWith("resource-exhausted") || code.includes("too-many-requests")) return "Too many attempts. Please wait a few minutes and try again.";
-  if (code.includes("network-request-failed") || code.endsWith("unavailable")) return msg && !msg.startsWith("internal") ? msg : "No connection. Check your internet and try again.";
-  if (code.includes("invalid-verification-code")) return "That code is not right. Check the SMS and try again.";
-  if (code.includes("code-expired")) return "That code has expired. Ask for a new one.";
-  if (code.includes("invalid-phone-number")) return "That phone number does not look right.";
-  if (code.includes("wrong-password") || code.includes("invalid-credential") || code.includes("invalid-login-credentials")) return "Email or password is not right.";
-  if (code.includes("user-not-found")) return "No profile with those details.";
-  if (code.includes("requires-recent-login")) return "For your safety, log in again and repeat this.";
-  if (code.includes("captcha")) return "The security check did not finish. Please try again.";
-  if (msg && !/^(internal|INTERNAL)$/.test(msg)) return msg.replace(/^Firebase: /, "").replace(/\(auth\/[^)]+\)\.?/, "").trim();
+  if (code.endsWith("resource-exhausted") || has("too-many-requests")) return "Too many attempts. Please wait a few minutes and try again.";
+  if (has("network-request-failed") || code.endsWith("unavailable")) return msg && !/^(internal|Error)$/i.test(msg) && !msg.startsWith("Firebase:") ? msg : "No connection. Check your internet and try again.";
+  if (has("invalid-verification-code")) return "That code is not right. Check the SMS and try again.";
+  if (has("code-expired")) return "That code has expired. Ask for a new one.";
+  if (has("invalid-phone-number")) return "That phone number does not look right.";
+  if (has("wrong-password") || has("invalid-credential") || has("invalid-login-credentials")) return "Email or password is not right.";
+  if (has("user-not-found")) return "No profile with those details.";
+  if (has("requires-recent-login")) return "For your safety, log in again and repeat this.";
+  if (has("captcha")) return "The security check did not finish. Please try again.";
+  const auth = (msg.match(/\((auth\/[^)]+)\)/) || [])[1] || (code.startsWith("auth/") ? code : "");
+  if (auth) return `Something went wrong (${auth}). Please try again, or tell HexhaEdge this code.`;
+  if (msg && !/^(internal|error)$/i.test(msg)) return msg.replace(/^Firebase: /, "").trim();
   return "Something went wrong. Please try again.";
 }

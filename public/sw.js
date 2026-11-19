@@ -2,7 +2,7 @@
 // Pages: network first (always fresh), falling back to the saved copy after 2.5 s
 // or when offline. Static assets: served from cache at once, refreshed behind.
 // Nothing from Firebase, M-Pesa or any API is ever cached here.
-const VERSION = "hx-v2";
+const VERSION = "hx-v3";
 const CORE = [
   "/",
   "/index.html",
