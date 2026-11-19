@@ -44,7 +44,7 @@ The rules, server code and their tests are in the [HEXHAEDGE-WEBSITE-BACKEND](ht
 
 - Processors to list in the privacy notice and to sign agreements with: Google (Firebase), Render (API servers in Frankfurt), Cloudflare,
   Cloudinary, Safaricom, Africa's Talking, Meta (WhatsApp), Resend.
-- Data location: Firestore and Storage in `africa-south1` (South Africa); the API processes requests on Render in Frankfurt (Germany). Transfers outside Kenya need
+- Data location: Firestore and Storage in `europe-west1` (Belgium); the API processes requests on Render in Frankfurt (Germany). Both are in the EU. Transfers outside Kenya need
   adequate safeguards or consent: confirm.
 - MindSpace records are health-related (sensitive): explicit consent, separate storage and access list are
   built; a data protection impact assessment may be needed before launch.
