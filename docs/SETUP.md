@@ -22,7 +22,7 @@ Settings → Build:
 - **Production branch:** `main`
 
 Security headers and redirects come from `public/_headers` and `public/_redirects`.
-The site is served at `hexhaedge-website.hexhaedge.workers.dev` until you add a custom domain.
+The site is served at **https://hexhaedge.com** (custom domain), and still at `hexhaedge-website.hexhaedge.workers.dev`.
 
 ## 2. Connect the website to Firebase and the API
 
@@ -36,7 +36,7 @@ Edit `public/assets/js/firebase-config.js`:
 As soon as `projectId` is not the placeholder, demo mode switches off and the site uses real data.
 
 Then, in the backend's Render settings, set `ALLOWED_ORIGINS` to this site's address(es), for example
-`https://hexhaedge.pages.dev,https://www.your-domain.co.ke`. And in Firebase → Authentication → Settings →
+`https://hexhaedge.com,https://www.hexhaedge.com`. And in Firebase → Authentication → Settings →
 Authorized domains, add the same domains.
 
 ## 3. Custom domain
